@@ -266,7 +266,7 @@ video {
   box-shadow: 0 9px 46px 8px rgba(0,0,0,.14), 0 11px 15px -7px rgba(0,0,0,.12), 0 24px 38px 3px rgba(0,0,0,.2);
 }
 
-.app__dialog h5 { 
+.app__dialog h5 {
   margin-top: 20px;
   margin-left: 18px;
   font-weight: 500;
@@ -297,7 +297,7 @@ video {
   border: 0;
   height: 35px;
   width: 70px;
-  font-size: 15px;
+  font-size: 16px;
   background: transparent;
   font-weight: 500;
   outline: none;
@@ -338,11 +338,14 @@ video {
   position: absolute;
   bottom: -70px;
   font-size: 18px;
-  left: 0;
   right: 0;
   text-align: center;
   user-select: none;
+}
+
+.app__help-text {
   display: none;
+  left: 0;
 }
 
 .app__dialog-overlay {
@@ -363,19 +366,24 @@ video {
 }
 
 .app__select-photos {
-  font-size: 19px;
-  font-weight: 500;
-  width: 250px;
-  height: 35px;
-  line-height: 35px;
-  margin: 0 auto;
+  width: 58px;
+  height: 58px;
   cursor: pointer;
   position: fixed;
   bottom: 20px;
-  text-transform: uppercase;
+  right: 20px;
+  border-radius: 50%;
+  background-color: #3F51B5;
+  background-image: url("/images/photo-camera.svg");
+  background-repeat: no-repeat;
+  background-size: 26px;
+  background-position: 16px 15px;
 }
 
 .app__select-photos:active {
-  opacity: 0.9;
-  transform: scale(0.98);
+  opacity: 0.8;
+}
+
+input[type='file'] {
+  display: none;
 }

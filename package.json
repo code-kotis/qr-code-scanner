@@ -1,34 +1,34 @@
 {
-  "name": "barcodeScanner",
-  "version": "3.0.0",
-  "engines": {
-    "node": "4.1.1"
-  },
-  "dependencies": {
-    "is-url": "^1.2.2"
-  },
-  "devDependencies": {
-    "babel-core": "latest",
-    "babel-loader": "^6.2.8",
-    "babel-preset-env": "latest",
-    "copy-webpack-plugin": "^4.0.1",
-    "cross-env": "^5.0.1",
-    "css-loader": "^0.26.1",
-    "extract-text-webpack-plugin": "^2.1.0",
-    "html-webpack-plugin": "^2.24.1",
-    "image-webpack-loader": "^3.0.0",
-    "node-sass": "^3.13.0",
-    "offline-plugin": "^4.5.3",
-    "sass-loader": "^4.0.2",
-    "style-loader": "^0.13.1",
-    "uglify-js": "^2.7.5",
-    "vinyl-source-stream": "^1.1.0",
-    "webpack": "2.2.0",
-    "webpack-dev-server": "2.2.0"
-  },
-  "scripts": {
-    "start": "webpack-dev-server --hot --inline --open",
-    "deploy": "npm run build && bash deploy.sh",
-    "build": "cross-env NODE_ENV=production webpack -p --config webpack.config.js"
-  }
+	"name": "barcode-scanner",
+	"version": "3.0.0",
+	"engines": {
+		"node": ">=8.9.0"
+	},
+	"dependencies": {
+		"is-url": "^1.2.2"
+	},
+	"devDependencies": {
+		"babel-core": "latest",
+		"babel-loader": "^6.2.8",
+		"babel-preset-env": "latest",
+		"copy-webpack-plugin": "^4.0.1",
+		"cross-env": "^5.0.1",
+		"css-loader": "^0.26.1",
+		"extract-text-webpack-plugin": "^2.1.0",
+		"html-webpack-plugin": "^2.24.1",
+		"image-webpack-loader": "^3.0.0",
+		"node-sass": "^3.13.0",
+		"offline-plugin": "^4.5.3",
+		"sass-loader": "^4.0.2",
+		"style-loader": "^0.13.1",
+		"uglify-js": "^2.7.5",
+		"vinyl-source-stream": "^1.1.0",
+		"webpack": "2.2.0",
+		"webpack-dev-server": "2.2.0"
+	},
+	"scripts": {
+		"start": "webpack-dev-server --hot --inline --open",
+		"deploy": "npm run build && bash deploy.sh",
+		"build": "cross-env NODE_ENV=production webpack -p --config webpack.config.js"
+	}
 }

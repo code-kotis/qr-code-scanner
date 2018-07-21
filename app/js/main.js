@@ -20,7 +20,8 @@ if (process.env.NODE_ENV === 'production') {
 
 window.addEventListener("DOMContentLoaded", () => {
   //To check the device and add iOS support
-  window.iOS = ['iPad', 'iPhone', 'iPod'].indexOf(navigator.platform) >= 0;
+  window.iOS = ["iPad", "iPhone", "iPod"].indexOf(navigator.platform) >= 0;
+  window.isMediaStreamAPISupported = (navigator && navigator.mediaDevices && 'enumerateDevices' in navigator.mediaDevices);
 
   var copiedText = null;
   var frame = null;
@@ -31,34 +32,36 @@ window.addEventListener("DOMContentLoaded", () => {
   var dialogCloseBtnElement = document.querySelector('.app__dialog-close');
   var scanningEle = document.querySelector('.custom-scanner');
   var textBoxEle = document.querySelector('#result');
-  var helpText = document.querySelector('.app__help-text');
+  var helpTextEle = document.querySelector('.app__help-text');
   var infoSvg = document.querySelector('.app__header-icon svg');
   var videoElement = document.querySelector('video');
   window.appOverlay = document.querySelector('.app__overlay');
-    
+
   //Initializing qr scanner
   window.addEventListener('load', (event) => {
     QRReader.init(); //To initialize QR Scanner
     // Set camera overlay size
-    setTimeout(() => { 
+    setTimeout(() => {
       setCameraOverlay();
-      if (!window.iOS) {
+      if (window.isMediaStreamAPISupported) {
         scan();
       }
     }, 1000);
+
+    // To support other browsers who dont have mediaStreamAPI
+    selectFromPhoto();
   });
 
   function setCameraOverlay() {
     window.appOverlay.style.borderStyle = 'solid';
-    helpText.style.display = 'block';
   }
-  
+
   function createFrame() {
     frame = document.createElement('img');
     frame.src = '';
     frame.id = 'frame';
   }
-  
+
   //Dialog close btn event
   dialogCloseBtnElement.addEventListener('click', hideDialog, false);
   dialogOpenBtnElement.addEventListener('click', openInBrowser, false);
@@ -72,9 +75,11 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   //Scan
-  function scan() {
-    if (!window.iOS) scanningEle.style.display = 'block';
+  function scan(forSelectedPhotos = false) {
+    if (window.isMediaStreamAPISupported) scanningEle.style.display = 'block';
+    else { helpTextEle.style.display = 'block'; }
     QRReader.scan((result) => {
+
       copiedText = result;
       textBoxEle.value = result;
       textBoxEle.select();
@@ -84,7 +89,7 @@ window.addEventListener("DOMContentLoaded", () => {
       }
       dialogElement.classList.remove('app__dialog--hide');
       dialogOverlayElement.classList.remove('app__dialog--hide');
-    });
+    }, forSelectedPhotos);
   }
 
   //Hide dialog
@@ -92,7 +97,7 @@ window.addEventListener("DOMContentLoaded", () => {
     copiedText = null;
     textBoxEle.value = "";
 
-    if (window.iOS) {
+    if (!window.isMediaStreamAPISupported) {
       frame.src = "";
       frame.className = "";
     }
@@ -102,20 +107,12 @@ window.addEventListener("DOMContentLoaded", () => {
     scan();
   }
 
-  // For iOS support
-  if (window.iOS) selectFromPhoto();
-
   function selectFromPhoto() {
-    if (videoElement) videoElement.remove(); //removing the video element
-    
     //Creating the camera element
     var camera = document.createElement('input');
     camera.setAttribute('type', 'file');
     camera.setAttribute('capture', 'camera');
     camera.id = 'camera';
-    helpText.textContent = '';
-    helpText.style.color = '#212121';
-    helpText.style.bottom = '-60px';
     infoSvg.style.fill = '#212121';
     window.appOverlay.style.borderStyle = '';
     selectPhotoBtn.style.color = "#212121";
@@ -132,7 +129,7 @@ window.addEventListener("DOMContentLoaded", () => {
       scanningEle.style.display = 'none';
       document.querySelector("#camera").click();
     });
-    
+
     //On camera change
     camera.addEventListener('change', (event) => {
       if (event.target && event.target.files.length > 0) {
