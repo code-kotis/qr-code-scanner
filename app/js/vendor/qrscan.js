@@ -1,4 +1,4 @@
-import {snackbar} from "../snackbar.js";
+import { snackbar } from '../snackbar.js';
 
 var QRReader = {};
 
@@ -9,39 +9,41 @@ QRReader.ctx = null;
 QRReader.decoder = null;
 
 QRReader.setCanvas = () => {
-	QRReader.canvas = document.createElement("canvas");
-	QRReader.ctx = QRReader.canvas.getContext("2d");
-}
+	QRReader.canvas = document.createElement('canvas');
+	QRReader.ctx = QRReader.canvas.getContext('2d');
+};
 
 function setPhotoSourceToScan(forSelectedPhotos) {
 	if (!forSelectedPhotos && window.isMediaStreamAPISupported) {
-		QRReader.webcam = document.querySelector("video");
-	}
-	else {
-		QRReader.webcam = document.querySelector("img");
+		QRReader.webcam = document.querySelector('video');
+	} else {
+		QRReader.webcam = document.querySelector('img');
 	}
 }
 
 QRReader.init = () => {
-	var baseurl = "";
+	var baseurl = '';
 	var streaming = false;
 
 	// Init Webcam + Canvas
 	setPhotoSourceToScan();
 
 	QRReader.setCanvas();
-	QRReader.decoder = new Worker(baseurl + "decoder.min.js");
+	QRReader.decoder = new Worker(baseurl + 'decoder.min.js');
 
 	if (window.isMediaStreamAPISupported) {
 		// Resize webcam according to input
-		QRReader.webcam.addEventListener("play", function (ev) {
-			if (!streaming) {
-				setCanvasProperties();
-				streaming = true;
-			}
-		}, false);
-	}
-	else {
+		QRReader.webcam.addEventListener(
+			'play',
+			function(ev) {
+				if (!streaming) {
+					setCanvasProperties();
+					streaming = true;
+				}
+			},
+			false
+		);
+	} else {
 		setCanvasProperties();
 	}
 
@@ -51,27 +53,29 @@ QRReader.init = () => {
 	}
 
 	function startCapture(constraints) {
-		navigator.mediaDevices.getUserMedia(constraints)
-			.then(function (stream) {
+		navigator.mediaDevices
+			.getUserMedia(constraints)
+			.then(function(stream) {
 				QRReader.webcam.srcObject = stream;
-				QRReader.webcam.setAttribute("playsinline", true);
-				QRReader.webcam.setAttribute("controls", true);
+				QRReader.webcam.setAttribute('playsinline', true);
+				QRReader.webcam.setAttribute('controls', true);
 				setTimeout(() => {
-					this.videoElement.removeAttribute("controls");
+					document.querySelector('video').removeAttribute('controls');
 				});
 			})
 			.catch(function(err) {
-				console.log("Error occurred ", err);
+				console.log('Error occurred ', err);
 				showErrorMsg();
 			});
 	}
 
 	if (window.isMediaStreamAPISupported) {
-		navigator.mediaDevices.enumerateDevices()
-			.then(function (devices) {
+		navigator.mediaDevices
+			.enumerateDevices()
+			.then(function(devices) {
 				var device = devices.filter(function(device) {
 					var deviceLabel = device.label.split(',')[1];
-					if (device.kind == "videoinput") {
+					if (device.kind == 'videoinput') {
 						return device;
 					}
 				});
@@ -88,12 +92,11 @@ QRReader.init = () => {
 					};
 
 					if (window.iOS) {
-						constraints.video.facingMode = "environment";
+						constraints.video.facingMode = 'environment';
 					}
 
 					startCapture(constraints);
-				}
-				else if (device.length) {
+				} else if (device.length) {
 					constraints = {
 						video: {
 							mandatory: {
@@ -104,27 +107,26 @@ QRReader.init = () => {
 					};
 
 					if (window.iOS) {
-						constraints.video.facingMode = "environment";
+						constraints.video.facingMode = 'environment';
 					}
 
 					startCapture(constraints);
-				}
-				else {
-					startCapture({video:true});
+				} else {
+					startCapture({ video: true });
 				}
 			})
-			.catch(function (error) {
+			.catch(function(error) {
 				showErrorMsg();
-				console.error("Error occurred : ", error);
+				console.error('Error occurred : ', error);
 			});
 	}
 
 	function showErrorMsg() {
-		document.querySelector('.app__overlay').style.display = "none";
-		document.querySelector('.app__header-icon svg').style.fill = '#212121';
-		snackbar.show('Unable to open the camera, provide permission to access the camera', 10000);
+		window.noCameraPermission = true;
+		document.querySelector('.custom-scanner').style.display = 'none';
+		snackbar.show('Unable to access the camera', 10000);
 	}
-}
+};
 
 /**
  * \brief QRReader Scan Action
@@ -132,10 +134,7 @@ QRReader.init = () => {
  *
  * \param A function(scan_result)
  */
-QRReader.scan = function (callback, forSelectedPhotos) {
-	setTimeout(() => {
-		// setPhotoSourceToScan(forSelectedPhotos);
-	})
+QRReader.scan = function(callback, forSelectedPhotos) {
 	QRReader.active = true;
 	QRReader.setCanvas();
 	function onDecoderMessage(event) {
@@ -146,26 +145,29 @@ QRReader.scan = function (callback, forSelectedPhotos) {
 		}
 		setTimeout(newDecoderFrame, 0);
 	}
+
 	QRReader.decoder.onmessage = onDecoderMessage;
+
+	setTimeout(() => {
+		setPhotoSourceToScan(forSelectedPhotos);
+	});
 
 	// Start QR-decoder
 	function newDecoderFrame() {
 		if (!QRReader.active) return;
 		try {
-			QRReader.ctx.drawImage(QRReader.webcam, 0, 0,
-				QRReader.canvas.width, QRReader.canvas.height);
-			var imgData = QRReader.ctx.getImageData(0, 0, QRReader.canvas.width,
-				QRReader.canvas.height);
+			QRReader.ctx.drawImage(QRReader.webcam, 0, 0, QRReader.canvas.width, QRReader.canvas.height);
+			var imgData = QRReader.ctx.getImageData(0, 0, QRReader.canvas.width, QRReader.canvas.height);
 
 			if (imgData.data) {
 				QRReader.decoder.postMessage(imgData);
 			}
-		} catch(e) {
+		} catch (e) {
 			// Try-Catch to circumvent Firefox Bug #879717
-			if (e.name == "NS_ERROR_NOT_AVAILABLE") setTimeout(newDecoderFrame, 0);
+			if (e.name == 'NS_ERROR_NOT_AVAILABLE') setTimeout(newDecoderFrame, 0);
 		}
 	}
 	newDecoderFrame();
-}
+};
 
 module.exports = QRReader;

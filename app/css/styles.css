@@ -9,8 +9,8 @@ body {
   position: absolute;
   width: 100%;
   height: 100%;
-  -webkit-overflow-scrolling: touch;
   overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .app__header {
@@ -212,7 +212,7 @@ video {
 
 .app__snackbar {
   position: fixed;
-  bottom: 20px;
+  bottom: 15px;
   left: 20px;
   pointer-events: none;
   z-index: 9999;
@@ -319,17 +319,39 @@ video {
 
 .app__overlay {
   position: fixed;
-  top: -56px;
+  top: 0;
   bottom: 0;
   right: 0;
   left: 0;
-  border-color: #ffffff;
-  border-width: 2px;
   transition: all 200ms ease-in;
-  width: 360px;
-  height: 360px;
+  width: 320px;
+  height: 320px;
   margin: auto;
-  border-radius: 2px;
+}
+
+
+.app__overlay-left,
+.app__overlay-right {
+  width: 52px;
+  height: 340px;
+  background: #7f7f7f;
+}
+
+.app__overlay-left {
+  margin-left: -57px;
+  margin-top: -10px;
+}
+
+.app__overlay-right {
+  margin-right: -57px;
+  margin-top: -340px;
+  float: right;
+}
+
+.app__overlay {
+  /* border-color: #ffffff;
+  border-width: 5px; */
+  border: 0;
 }
 
 .app__help-text,
@@ -386,4 +408,9 @@ video {
 
 input[type='file'] {
   display: none;
+}
+
+#frame {
+  width: auto;
+  height: auto;
 }
