@@ -18,7 +18,7 @@
   
   - Add to home screen, Splash screen.
 
-  - Supported Browser - Google Chrome, Firefox, Opera **(Both Desktop & Mobile)** and now supports iOS as well.
+  - Supported Browser - Google Chrome, Firefox, Opera **(Both Desktop & Mobile)**, Microsoft Edge (**(Insider Preview build)**) and now supports iOS as well.
 
 ## Installation
 
