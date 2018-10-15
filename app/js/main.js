@@ -63,6 +63,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
   function createFrame() {
     frame = document.createElement('img');
+    frame.alt = 'Camera frame';
     frame.src = '';
     frame.id = 'frame';
   }
