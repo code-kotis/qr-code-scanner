@@ -11,5 +11,7 @@ skip_cleanup: true
 
 before_script:
   - yarn install
-  - yarn run build
   - yarn danger ci
+
+script:
+  - yarn run build

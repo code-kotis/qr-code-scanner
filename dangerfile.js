@@ -9,7 +9,7 @@ const currentBuildResults = JSON.parse(readFileSync('./stats.json'));
 message(`:tada: The PR added ${additions} and removed ${deletions} lines. \n`);
 
 // Show PR Changes
-const modifiedFiles = danger.git.modified_files.join('- ');
+const modifiedFiles = danger.git.modified_files.join('\n - ');
 message('Changed Files in this PR: \n - ' + modifiedFiles + '\n');
 
 // Show warnings
