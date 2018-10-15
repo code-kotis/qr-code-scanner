@@ -6,11 +6,15 @@
 		"start": "webpack-dev-server --hot --inline --open --mode=development",
 		"deploy": "npm run build && bash deploy.sh",
 		"build": "cross-env NODE_ENV=production webpack-cli --mode=production --config webpack.config.js",
+		"stats": "cross-env NODE_ENV=production webpack-cli --mode=production --profile --json > stats.json",
 		"precommit": "lint-staged",
 		"pretty": "prettier --write 'app/**/*.js'"
 	},
 	"lint-staged": {
-		"*.{js,css}": ["npm run pretty","git add"]
+		"*.{js,css}": [
+			"npm run pretty",
+			"git add"
+		]
 	},
 	"engines": {
 		"node": ">=4.1.1"
@@ -23,6 +27,7 @@
 		"copy-webpack-plugin": "^4.5.3",
 		"cross-env": "^5.2.0",
 		"css-loader": "^1.0.0",
+		"danger": "^4.4.8",
 		"extract-text-webpack-plugin": "4.0.0-beta.0",
 		"file-loader": "^2.0.0",
 		"html-webpack-plugin": "^3.2.0",

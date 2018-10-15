@@ -1,6 +1,6 @@
 ### <p align="center"><img width="150px" height="150px" src="https://raw.githubusercontent.com/code-kotis/barcode-scanner/master/app/images/touch/android-chrome-192x192.png"></p>
 
-# [QR Code Scanner](https://qrcodescan.in)
+# [QR Code Scanner](https://qrcodescan.in) ![Build](https://travis-ci.org/code-kotis/barcode-scanner.svg?branch=master)
 
 *QRCode Scanner - a simple, fast and useful progressive web application*
 
@@ -9,13 +9,13 @@
 ## Features
 
   - App Shell.
-  
+
   - Secure via https using [cloudflare free ssl](https://www.cloudflare.com/ssl/)
-  
+
   - Works offline.
 
   - Fully Responsive.
-  
+
   - Add to home screen, Splash screen.
 
   - Supported Browser - Google Chrome, Firefox, Opera **(Both Desktop & Mobile)**, Microsoft Edge (**(Insider Preview build)**) and now supports iOS as well.
