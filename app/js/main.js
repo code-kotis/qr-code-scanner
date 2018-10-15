@@ -7,7 +7,7 @@ import isURL from 'is-url';
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
-      .register('/sw.js')
+      .register('/service-worker.js')
       .then(reg => {
         console.log('SW registered: ', reg);
         if (!localStorage.getItem('offline')) {
@@ -43,7 +43,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   //Initializing qr scanner
   window.addEventListener('load', event => {
-    console.log('came --->'); // eslint-disable-line
     QRReader.init(); //To initialize QR Scanner
     // Set camera overlay size
     setTimeout(() => {
