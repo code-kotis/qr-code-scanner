@@ -24,9 +24,9 @@ module.exports = {
       chunkFilename: '[id].css'
     }),
     new WorkboxPlugin.GenerateSW({
-      swDest: 'sw.js',
       clientsClaim: true,
-      skipWaiting: true
+      skipWaiting: true,
+      runtimeCaching: [{ urlPattern: new RegExp('/'), handler: 'staleWhileRevalidate' }]
     }),
     new HtmlWebpackPlugin({
       template: './app/index.html',
@@ -42,7 +42,7 @@ module.exports = {
         preset: ['default', { discardComments: { removeAll: true } }]
       }
     }),
-    new CopyWebpackPlugin([{ from: 'images/', to: 'images' }, 'decoder.js', 'manifest.json'], {
+    new CopyWebpackPlugin([{ from: 'images/', to: 'images' }, 'decoder.js', 'manifest.json', 'CNAME'], {
       context: './app'
     })
   ],
