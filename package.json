@@ -1,34 +1,40 @@
 {
 	"name": "barcode-scanner",
-	"version": "3.0.0",
+	"description": "a simple, fast and useful progressive web application.",
+	"version": "3.1.0",
+	"scripts": {
+		"start": "webpack-dev-server --hot --inline --open --mode=development",
+		"deploy": "npm run build && bash deploy.sh",
+		"build": "cross-env NODE_ENV=production webpack-cli --mode=production --config webpack.config.js",
+		"precommit": "lint-staged",
+		"pretty": "prettier --write 'app/**/*.js'"
+	},
+	"lint-staged": {
+		"*.{js,css}": ["npm run pretty","git add"]
+	},
 	"engines": {
 		"node": ">=4.1.1"
 	},
 	"dependencies": {
-		"is-url": "^1.2.2"
+		"is-url": "^1.2.4"
 	},
 	"devDependencies": {
-		"babel-core": "latest",
-		"babel-loader": "^6.2.8",
-		"babel-preset-env": "latest",
-		"copy-webpack-plugin": "^4.0.1",
-		"cross-env": "^5.0.1",
-		"css-loader": "^0.26.1",
-		"extract-text-webpack-plugin": "^2.1.0",
-		"html-webpack-plugin": "^2.24.1",
-		"image-webpack-loader": "^3.0.0",
-		"node-sass": "^3.13.0",
-		"offline-plugin": "^4.5.3",
-		"sass-loader": "^4.0.2",
-		"style-loader": "^0.13.1",
-		"uglify-js": "^2.7.5",
-		"vinyl-source-stream": "^1.1.0",
-		"webpack": "2.2.0",
-		"webpack-dev-server": "2.2.0"
-	},
-	"scripts": {
-		"start": "webpack-dev-server --hot --inline --open",
-		"deploy": "npm run build && bash deploy.sh",
-		"build": "cross-env NODE_ENV=production webpack -p --config webpack.config.js"
+		"clean-webpack-plugin": "^0.1.19",
+		"copy-webpack-plugin": "^4.5.3",
+		"cross-env": "^5.2.0",
+		"css-loader": "^1.0.0",
+		"extract-text-webpack-plugin": "4.0.0-beta.0",
+		"file-loader": "^2.0.0",
+		"html-webpack-plugin": "^3.2.0",
+		"husky": "^1.1.2",
+		"lint-staged": "^7.3.0",
+		"mini-css-extract-plugin": "^0.4.4",
+		"optimize-css-assets-webpack-plugin": "^5.0.1",
+		"prettier": "^1.14.3",
+		"style-loader": "^0.23.1",
+		"webpack": "^4.20.2",
+		"webpack-cli": "^3.1.2",
+		"webpack-dev-server": "^3.1.9",
+		"workbox-webpack-plugin": "^3.6.2"
 	}
 }

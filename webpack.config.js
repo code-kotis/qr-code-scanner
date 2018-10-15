@@ -1,117 +1,64 @@
-const webpack = require('webpack');
+const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const OfflinePlugin = require('offline-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-const config = {
-	context: __dirname + '/app',
-  entry: {
-  	main: './js/main.js'
-  },
+module.exports = {
+  entry: './app/js/main.js',
   output: {
-    path: __dirname + '/dist',
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].[hash].bundle.js'
   },
   devServer: {
-    compress: true,
     contentBase: __dirname + '/app'
   },
-  
+  optimization: {},
+  plugins: [
+    new CleanWebpackPlugin(['dist']),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css'
+    }),
+    new WorkboxPlugin.GenerateSW({
+      swDest: 'sw.js',
+      clientsClaim: true,
+      skipWaiting: true
+    }),
+    new HtmlWebpackPlugin({
+      template: './app/index.html',
+      minify: {
+        collapseWhitespace: true
+      }
+    }),
+    new ExtractTextPlugin({
+      filename: 'styles.css'
+    }),
+    new OptimizeCssAssetsPlugin({
+      cssProcessorPluginOptions: {
+        preset: ['default', { discardComments: { removeAll: true } }]
+      }
+    }),
+    new CopyWebpackPlugin([{ from: 'images/', to: 'images' }, 'decoder.js', 'manifest.json'], {
+      context: './app'
+    })
+  ],
   module: {
-    loaders: [
-      {
-        test: /\.js$/, //Check for all JS files
-        exclude: /node_modules/,
-        use: [{
-          loader: 'babel-loader',
-          options: { presets: ['env'] }
-        }]
-      },
+    rules: [
       {
         test: /\.css$/,
-        loader:  ExtractTextPlugin.extract({
-          loader: 'css-loader?importLoaders=1',
-        }),
+        use: ExtractTextPlugin.extract({
+          use: 'css-loader?importLoaders=1',
+          fallback: 'style-loader'
+        })
       },
       {
         test: /.*\.(gif|png|jpe?g|svg)$/i,
-        loaders: [
-          'file-loader',
-          {
-            loader: 'image-webpack',
-            query: {
-              progressive: true,
-              optimizationLevel: 7,
-              interlaced: false,
-              pngquant: {
-                quality: '65-90',
-                speed: 4
-              }
-            }
-          }
-        ]
+        use: ['file-loader']
       }
     ]
-  },
-
-  plugins: [
-    new webpack.DefinePlugin({
-      'NODE_ENV': process.env.NODE_ENV
-    }),
-    new ExtractTextPlugin({
-      filename: 'bundle.css',
-      allChunks: true,
-    }),
-    new HtmlWebpackPlugin({
-      template: __dirname + '/app/index.html',
-      filename: __dirname + '/dist/index.html',
-      minify: { collapseWhitespace: true }
-    })
-  ],
-  devtool: 'eval-source-map'
-}
-
-// Setting plugins for production
-if (process.env.NODE_ENV === 'production') {
-  config.devtool = '';
-  config.plugins.push(
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    })
-  );
-  config.plugins.push(
-    new OfflinePlugin({
-      relativePaths: false,
-      AppCache: false,
-      publicPath: '/',
-      excludes: ['*.txt', '*.svg', 'CNAME', '**/.DS_Store', 'images/*.*', 'images/touch/*.*', 'images/touch/*.*', '**/*.map'],
-      externals: ['/index.html?utm_source=homescreen', 'images/touch/favicon.ico', 'images/touch/favicon-16x16.png', 'images/touch/favicon-32x32.png', 'images/touch/apple-touch-icon.jpg', 'images/touch/android-chrome-512x512.png', 'images/touch/android-chrome-192x192.png', '/decoder.min.js']
-    })
-  );
-  config.plugins.push(
-    new CopyWebpackPlugin([
-      {
-        from: {
-          glob:  __dirname + '/app/images/**/*',
-          dot: true
-        },
-        to: __dirname + '/dist'
-      },
-      { from: __dirname + '/app/decoder.min.js', to:  __dirname + '/dist/' },
-      { from: __dirname + '/app/manifest.json', to:  __dirname + '/dist/' },
-      { from: __dirname + '/CNAME', to:  __dirname + '/dist/' },
-      { from: __dirname + '/robots.txt', to:  __dirname + '/dist/' }
-    ])
-  );
-  config.plugins.push(
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: true
-    })
-  );
-}
-
-module.exports = config;
+  }
+};
