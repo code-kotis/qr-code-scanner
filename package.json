@@ -1,7 +1,7 @@
 {
-	"name": "barcode-scanner",
+	"name": "qr-code-scanner",
 	"description": "a simple, fast and useful progressive web application.",
-	"version": "3.1.0",
+	"version": "3.1.1",
 	"scripts": {
 		"start": "webpack-dev-server --hot --inline --open --mode=development",
 		"deploy": "npm run build && bash deploy.sh",
