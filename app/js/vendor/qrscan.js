@@ -75,7 +75,7 @@ QRReader.init = () => {
       .then(function(devices) {
         var device = devices.filter(function(device) {
           var deviceLabel = device.label.split(',')[1];
-          if (device.kind == 'videoinput') {
+          if (device.kind == 'videoinput' && device.label.indexOf("front") < 0) {
             return device;
           }
         });
