@@ -85,7 +85,7 @@ QRReader.init = () => {
           constraints = {
             video: {
               mandatory: {
-                sourceId: device[1].deviceId ? device[1].deviceId : null
+                sourceId: device[device.length - 1].deviceId ? device[device.length - 1].deviceId : null
               }
             },
             audio: false
