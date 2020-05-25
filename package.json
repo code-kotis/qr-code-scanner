@@ -1,7 +1,7 @@
 {
-	"name": "barcode-scanner",
-	"description": "a simple, fast and useful progressive web application.",
-	"version": "3.1.0",
+	"name": "qr-code-scanner",
+	"description": "QR Code Scanner is the fastest and most user-friendly web application.",
+	"version": "1.0.0",
 	"scripts": {
 		"start": "webpack-dev-server --hot --inline --open --mode=development",
 		"build": "cross-env NODE_ENV=production webpack-cli --mode=production --config webpack.config.js",
