@@ -109,7 +109,11 @@ QRReader.init = () => {
             constraints.video.facingMode = 'environment';
           }
 
-          startCapture(constraints);
+          if (!constraints.video.mandatory.sourceId) {
+            startCapture({ video: true });
+          } else {
+            startCapture(constraints);
+          }
         } else {
           startCapture({ video: true });
         }
