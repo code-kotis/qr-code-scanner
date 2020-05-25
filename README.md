@@ -1,31 +1,26 @@
-### <p align="center"><img width="150px" height="150px" src="https://raw.githubusercontent.com/code-kotis/barcode-scanner/master/app/images/touch/android-chrome-192x192.png"></p>
+### <p align="center"><img width="150px" height="150px" src="https://raw.githubusercontent.com/code-kotis/qr-code-scanner/master/app/images/touch/android-chrome-192x192.png"></p>
 
-# [QR Code Scanner](https://qrcodescan.in) ![Build](https://travis-ci.org/code-kotis/barcode-scanner.svg?branch=master)
+# [QR Code Scanner](https://qrcodescan.in)
 
-*QRCode Scanner - a simple, fast and useful progressive web application*
+*QR Code Scanner - a simple, fast and useful progressive web application*
 
 ### [Live](https://qrcodescan.in)
 
 ## Features
 
-  - App Shell.
-
-  - Secure via https using [cloudflare free ssl](https://www.cloudflare.com/ssl/)
-
-  - Works offline.
-
-  - Fully Responsive.
-
-  - Add to home screen, Splash screen.
-
-  - Supported Browser - Google Chrome, Firefox, Opera **(Both Desktop & Mobile)**, Microsoft Edge (**(Insider Preview build)**) and now supports iOS as well.
+  - App Shell
+  - Offline
+  - Secure via https
+  - Responsive
+  - Add to home screen & Splash screen
+  - Supported Browser (Mobile & Desktop) - Google Chrome, Firefox, Safari, Opera, Microsoft Edge and now supports iOS as well.
 
 ## Installation
 
 1. Clone this repo
 
   ```bash
-  git clone https://github.com/code-kotis/barcode-scanner
+  git clone https://github.com/code-kotis/qr-code-scanner
   ```
 
 2. Installation
@@ -44,12 +39,6 @@
 
   ```bash
   npm run build
-  ```
-
-5. Deploy
-
-  ```bash
-  npm run deploy
   ```
 
 ### Contributions

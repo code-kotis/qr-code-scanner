@@ -34,6 +34,7 @@
 		"mini-css-extract-plugin": "^0.4.4",
 		"optimize-css-assets-webpack-plugin": "^5.0.1",
 		"prettier": "^1.14.3",
+		"sitemap-webpack-plugin": "^0.8.0",
 		"style-loader": "^0.23.1",
 		"webpack": "^4.20.2",
 		"webpack-cli": "^3.1.2",

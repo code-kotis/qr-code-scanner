@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const SitemapPlugin = require('sitemap-webpack-plugin').default;
 
 module.exports = {
   entry: './app/js/main.js',
@@ -44,7 +45,8 @@ module.exports = {
     }),
     new CopyWebpackPlugin([{ from: 'images/', to: 'images' }, 'decoder.js', 'manifest.json', 'CNAME'], {
       context: './app'
-    })
+    }),
+    new SitemapPlugin('https://qrcodescan.in', ['/'])
   ],
   module: {
     rules: [
